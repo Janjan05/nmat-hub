@@ -4,206 +4,266 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
 <meta name="apple-mobile-web-app-title" content="NMAT Hub">
-<meta name="theme-color" content="#0a1628">
+<meta name="theme-color" content="#ffffff">
 <link rel="manifest" href="manifest.json">
 <link rel="apple-touch-icon" href="icons/icon-192.png">
 <title>NMAT Hub</title>
-<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Fraunces:ital,wght@0,600;0,700;1,600&display=swap" rel="stylesheet">
 <style>
-:root {
-  --bg: #0a1628;
-  --bg2: #0f1e38;
-  --bg3: #162444;
-  --accent: #00e5a0;
-  --accent2: #0af;
-  --text: #f0f4ff;
-  --text2: #8899bb;
-  --text3: #556080;
-  --border: rgba(255,255,255,0.07);
-  --border2: rgba(255,255,255,0.13);
-  --bio: #00e5a0;
-  --chem: #00aaff;
-  --phys: #ffaa00;
-  --soc: #cc88ff;
-  --verbal: #ff6688;
-  --quant: #44ddcc;
-  --r: 12px;
+:root{
+  --white:#ffffff;
+  --bg:#f5f5f3;
+  --bg2:#eeede9;
+  --surface:#ffffff;
+  --border:#e2e1dc;
+  --border2:#cccac3;
+  --text:#1a1916;
+  --text2:#6b6860;
+  --text3:#a09e99;
+  --accent:#2563eb;
+  --accent-light:#eff4ff;
+  --accent-text:#1d4ed8;
+  --bio-bg:#f0fdf4;--bio:#16a34a;--bio-border:#bbf7d0;
+  --chem-bg:#eff6ff;--chem:#2563eb;--chem-border:#bfdbfe;
+  --phys-bg:#fffbeb;--phys:#d97706;--phys-border:#fde68a;
+  --soc-bg:#faf5ff;--soc:#7c3aed;--soc-border:#e9d5ff;
+  --verbal-bg:#fff1f2;--verbal:#e11d48;--verbal-border:#fecdd3;
+  --quant-bg:#f0fdfa;--quant:#0d9488;--quant-border:#99f6e4;
+  --r:10px;--r2:14px;
+  --shadow:0 1px 3px rgba(0,0,0,0.08),0 1px 2px rgba(0,0,0,0.04);
+  --shadow2:0 4px 12px rgba(0,0,0,0.08),0 2px 4px rgba(0,0,0,0.04);
 }
 *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
-html,body{height:100%;background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;overflow-x:hidden}
-body{padding:env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left)}
+html{height:100%}
+body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;font-size:14px;line-height:1.5;min-height:100%;padding:env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left)}
 
-/* Background grid */
-body::before{
-  content:'';position:fixed;inset:0;
-  background-image:linear-gradient(rgba(0,229,160,0.03) 1px,transparent 1px),linear-gradient(90deg,rgba(0,229,160,0.03) 1px,transparent 1px);
-  background-size:40px 40px;pointer-events:none;z-index:0;
-}
+/* Screens */
+.screen{position:fixed;inset:0;overflow-y:auto;background:var(--bg);transition:transform 0.3s cubic-bezier(0.4,0,0.2,1),opacity 0.3s}
+.screen.hidden{transform:translateX(100%);opacity:0;pointer-events:none}
 
-.app{position:relative;z-index:1;max-width:900px;margin:0 auto;padding:0 20px 100px}
+.page{max-width:860px;margin:0 auto;padding:0 20px 80px}
 
-/* Header */
-.header{padding:24px 0 20px;display:flex;align-items:center;justify-content:space-between}
-.logo{display:flex;align-items:center;gap:10px}
-.logo-mark{width:36px;height:36px;background:var(--accent);border-radius:8px;display:flex;align-items:center;justify-content:center}
-.logo-mark svg{width:20px;height:20px}
-.logo-text{font-family:'Syne',sans-serif;font-size:20px;font-weight:700;color:var(--text);letter-spacing:-0.5px}
-.logo-sub{font-size:11px;color:var(--text3);font-weight:400;letter-spacing:1px;text-transform:uppercase;margin-top:1px}
-.header-btn{background:var(--bg3);border:1px solid var(--border2);border-radius:10px;padding:9px 16px;font-family:'DM Sans',sans-serif;font-size:13px;font-weight:500;color:var(--text);cursor:pointer;display:flex;align-items:center;gap:6px;transition:all 0.2s}
-.header-btn:hover{background:var(--accent);color:#0a1628;border-color:var(--accent)}
-.header-btn svg{width:14px;height:14px}
+/* Top nav */
+.topnav{display:flex;align-items:center;justify-content:space-between;padding:20px 0 16px;gap:12px}
+.brand{display:flex;align-items:center;gap:10px}
+.brand-icon{width:34px;height:34px;background:var(--text);border-radius:8px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.brand-icon svg{width:18px;height:18px;stroke:#fff}
+.brand-name{font-family:'Fraunces',serif;font-size:19px;font-weight:700;color:var(--text);letter-spacing:-0.3px}
+.brand-tag{font-size:11px;color:var(--text3);font-weight:500;letter-spacing:0.5px;text-transform:uppercase}
+.nav-btn{display:flex;align-items:center;gap:6px;padding:8px 14px;background:var(--text);color:#fff;border:none;border-radius:var(--r);font-family:'Inter',sans-serif;font-size:13px;font-weight:600;cursor:pointer;transition:opacity 0.15s;white-space:nowrap}
+.nav-btn:hover{opacity:0.85}
+.nav-btn svg{width:14px;height:14px;flex-shrink:0}
 
-/* Stats bar */
-.stats-bar{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:24px}
-.stat{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r);padding:14px 16px;text-align:center}
-.stat-num{font-family:'Syne',sans-serif;font-size:24px;font-weight:700;color:var(--accent);line-height:1}
-.stat-label{font-size:11px;color:var(--text3);margin-top:4px;text-transform:uppercase;letter-spacing:0.8px}
+/* Stats strip */
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:28px}
+.stat-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--r2);padding:16px;box-shadow:var(--shadow)}
+.stat-n{font-family:'Fraunces',serif;font-size:28px;font-weight:700;color:var(--text);line-height:1}
+.stat-l{font-size:11px;color:var(--text3);font-weight:500;text-transform:uppercase;letter-spacing:0.6px;margin-top:4px}
 
-/* Search */
-.search-wrap{position:relative;margin-bottom:18px}
-.search-icon{position:absolute;left:14px;top:50%;transform:translateY(-50%);color:var(--text3)}
-.search-icon svg{width:16px;height:16px;display:block}
-.search-input{width:100%;padding:12px 14px 12px 40px;background:var(--bg2);border:1px solid var(--border);border-radius:var(--r);font-family:'DM Sans',sans-serif;font-size:14px;color:var(--text);outline:none;transition:border-color 0.2s}
-.search-input::placeholder{color:var(--text3)}
-.search-input:focus{border-color:var(--border2)}
+/* Section header */
+.sec-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px}
+.sec-title{font-size:12px;font-weight:600;color:var(--text2);text-transform:uppercase;letter-spacing:0.8px}
 
-/* Filter chips */
-.chips{display:flex;gap:8px;overflow-x:auto;padding-bottom:4px;margin-bottom:22px;scrollbar-width:none}
-.chips::-webkit-scrollbar{display:none}
-.chip{white-space:nowrap;padding:6px 14px;border-radius:100px;border:1px solid var(--border);font-size:12px;font-weight:500;cursor:pointer;transition:all 0.18s;color:var(--text2);background:transparent;font-family:'DM Sans',sans-serif}
-.chip:hover{border-color:var(--border2);color:var(--text)}
-.chip.active{color:#0a1628;border-color:transparent}
-.chip[data-s="All"].active{background:var(--accent)}
-.chip[data-s="Biology"].active{background:var(--bio)}
-.chip[data-s="Chemistry"].active{background:var(--chem)}
-.chip[data-s="Physics"].active{background:var(--phys)}
-.chip[data-s="Social Science"].active{background:var(--soc)}
-.chip[data-s="Verbal"].active{background:var(--verbal)}
-.chip[data-s="Quantitative"].active{background:var(--quant)}
+/* Folder grid */
+.folder-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:10px;margin-bottom:8px}
 
-/* Section label */
-.section-label{font-size:11px;color:var(--text3);text-transform:uppercase;letter-spacing:1px;font-weight:500;margin-bottom:12px}
+.folder-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--r2);padding:18px 16px;cursor:pointer;transition:all 0.18s;box-shadow:var(--shadow);position:relative;overflow:hidden}
+.folder-card:hover{border-color:var(--border2);box-shadow:var(--shadow2);transform:translateY(-1px)}
+.folder-top{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:12px}
+.folder-emoji{font-size:26px;line-height:1}
+.folder-menu{display:flex;gap:4px;opacity:0;transition:opacity 0.15s}
+.folder-card:hover .folder-menu{opacity:1}
+.menu-btn{width:26px;height:26px;border-radius:6px;border:1px solid var(--border);background:var(--bg);color:var(--text2);cursor:pointer;font-size:12px;display:flex;align-items:center;justify-content:center;transition:all 0.15s}
+.menu-btn:hover{border-color:var(--border2);color:var(--text)}
+.menu-btn.danger:hover{border-color:#fecaca;background:#fff1f2;color:#e11d48}
+.folder-name{font-size:14px;font-weight:600;color:var(--text);margin-bottom:3px;line-height:1.3}
+.folder-meta{font-size:12px;color:var(--text3)}
+.folder-bar{position:absolute;bottom:0;left:0;right:0;height:3px}
 
-/* Cards grid */
-.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:12px}
+/* New folder card */
+.folder-new{border-style:dashed;border-color:var(--border2);background:transparent;box-shadow:none;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;min-height:120px;color:var(--text3)}
+.folder-new:hover{border-color:var(--accent);color:var(--accent);background:var(--accent-light)}
+.new-plus{width:30px;height:30px;border-radius:50%;border:1.5px dashed currentColor;display:flex;align-items:center;justify-content:center;font-size:16px}
+.new-label{font-size:12px;font-weight:500}
 
-/* Reviewer card */
-.card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r);overflow:hidden;cursor:pointer;transition:all 0.2s;position:relative}
-.card:hover{border-color:var(--border2);transform:translateY(-2px)}
-.card-accent{height:3px;width:100%}
-.card-body{padding:16px}
-.card-badge{display:inline-flex;align-items:center;gap:5px;font-size:11px;font-weight:500;padding:3px 9px;border-radius:100px;margin-bottom:10px;letter-spacing:0.3px}
-.card-name{font-family:'Syne',sans-serif;font-size:15px;font-weight:600;color:var(--text);margin-bottom:4px;line-height:1.3}
-.card-part{font-size:12px;color:var(--text3);margin-bottom:14px;min-height:16px}
-.card-footer{display:flex;gap:8px;align-items:center}
-.open-btn{flex:1;padding:9px;background:var(--bg3);border:1px solid var(--border2);border-radius:8px;font-family:'DM Sans',sans-serif;font-size:13px;font-weight:500;color:var(--text);cursor:pointer;transition:all 0.18s;text-align:center}
-.open-btn:hover{background:var(--accent);color:#0a1628;border-color:var(--accent)}
-.del-btn{padding:9px 11px;background:transparent;border:1px solid var(--border);border-radius:8px;color:var(--text3);cursor:pointer;font-size:13px;transition:all 0.18s;line-height:1}
-.del-btn:hover{border-color:#ff4466;color:#ff4466}
-.card-date{font-size:11px;color:var(--text3);margin-top:10px}
+/* Back nav */
+.backnav{display:flex;align-items:center;justify-content:space-between;padding:18px 0 16px;gap:12px;flex-wrap:wrap}
+.back-btn{display:flex;align-items:center;gap:6px;background:none;border:none;font-family:'Inter',sans-serif;font-size:13px;font-weight:500;color:var(--text2);cursor:pointer;padding:6px 10px 6px 6px;border-radius:8px;transition:all 0.15s}
+.back-btn:hover{background:var(--bg2);color:var(--text)}
+.back-btn svg{width:16px;height:16px}
+.folder-headline{display:flex;align-items:center;gap:10px;margin-bottom:6px}
+.folder-hl-icon{font-size:28px;line-height:1}
+.folder-hl-name{font-family:'Fraunces',serif;font-size:22px;font-weight:700;color:var(--text)}
+.folder-hl-count{font-size:13px;color:var(--text3);margin-bottom:20px}
 
-/* Subject colors per card */
-.card[data-s="Biology"] .card-accent{background:var(--bio)}
-.card[data-s="Biology"] .card-badge{background:rgba(0,229,160,0.1);color:var(--bio)}
-.card[data-s="Chemistry"] .card-accent{background:var(--chem)}
-.card[data-s="Chemistry"] .card-badge{background:rgba(0,170,255,0.1);color:var(--chem)}
-.card[data-s="Physics"] .card-accent{background:var(--phys)}
-.card[data-s="Physics"] .card-badge{background:rgba(255,170,0,0.1);color:var(--phys)}
-.card[data-s="Social Science"] .card-accent{background:var(--soc)}
-.card[data-s="Social Science"] .card-badge{background:rgba(204,136,255,0.1);color:var(--soc)}
-.card[data-s="Verbal"] .card-accent{background:var(--verbal)}
-.card[data-s="Verbal"] .card-badge{background:rgba(255,102,136,0.1);color:var(--verbal)}
-.card[data-s="Quantitative"] .card-accent{background:var(--quant)}
-.card[data-s="Quantitative"] .card-badge{background:rgba(68,221,204,0.1);color:var(--quant)}
+/* Reviewer cards */
+.rev-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:10px}
+.rev-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--r2);overflow:hidden;box-shadow:var(--shadow);transition:all 0.18s}
+.rev-card:hover{box-shadow:var(--shadow2);transform:translateY(-1px)}
+.rev-top{height:4px}
+.rev-body{padding:14px 14px 12px}
+.rev-badge{display:inline-flex;align-items:center;font-size:11px;font-weight:600;padding:2px 8px;border-radius:100px;margin-bottom:8px;letter-spacing:0.2px;border:1px solid}
+.rev-name{font-size:14px;font-weight:600;color:var(--text);line-height:1.35;margin-bottom:3px}
+.rev-part{font-size:12px;color:var(--text3);margin-bottom:12px;min-height:16px}
+.rev-actions{display:flex;gap:8px}
+.open-btn{flex:1;padding:8px;background:var(--text);color:#fff;border:none;border-radius:8px;font-family:'Inter',sans-serif;font-size:12px;font-weight:600;cursor:pointer;transition:opacity 0.15s}
+.open-btn:hover{opacity:0.8}
+.rm-btn{padding:8px 10px;background:transparent;border:1px solid var(--border);border-radius:8px;color:var(--text3);cursor:pointer;font-size:12px;transition:all 0.15s;line-height:1}
+.rm-btn:hover{border-color:#fecaca;color:#e11d48;background:#fff1f2}
+.rev-date{font-size:11px;color:var(--text3);margin-top:10px}
 
-/* Empty state */
-.empty{grid-column:1/-1;text-align:center;padding:60px 20px}
-.empty-icon{font-size:48px;margin-bottom:16px;opacity:0.3}
-.empty-text{font-size:15px;color:var(--text2);margin-bottom:6px}
+/* Subject colors */
+.rev-card[data-s="Biology"] .rev-top{background:var(--bio)}
+.rev-card[data-s="Biology"] .rev-badge{background:var(--bio-bg);color:var(--bio);border-color:var(--bio-border)}
+.rev-card[data-s="Chemistry"] .rev-top{background:var(--chem)}
+.rev-card[data-s="Chemistry"] .rev-badge{background:var(--chem-bg);color:var(--chem);border-color:var(--chem-border)}
+.rev-card[data-s="Physics"] .rev-top{background:var(--phys)}
+.rev-card[data-s="Physics"] .rev-badge{background:var(--phys-bg);color:var(--phys);border-color:var(--phys-border)}
+.rev-card[data-s="Social Science"] .rev-top{background:var(--soc)}
+.rev-card[data-s="Social Science"] .rev-badge{background:var(--soc-bg);color:var(--soc);border-color:var(--soc-border)}
+.rev-card[data-s="Verbal"] .rev-top{background:var(--verbal)}
+.rev-card[data-s="Verbal"] .rev-badge{background:var(--verbal-bg);color:var(--verbal);border-color:var(--verbal-border)}
+.rev-card[data-s="Quantitative"] .rev-top{background:var(--quant)}
+.rev-card[data-s="Quantitative"] .rev-badge{background:var(--quant-bg);color:var(--quant);border-color:var(--quant-border)}
+
+/* Empty */
+.empty{grid-column:1/-1;text-align:center;padding:48px 20px}
+.empty-icon{font-size:40px;margin-bottom:12px;opacity:0.25}
+.empty-text{font-size:14px;color:var(--text2);font-weight:500;margin-bottom:4px}
 .empty-sub{font-size:13px;color:var(--text3)}
 
+/* Divider */
+.divider{height:1px;background:var(--border);margin:24px 0}
+
 /* Modal */
-.modal-bg{position:fixed;inset:0;background:rgba(5,10,22,0.85);z-index:200;display:flex;align-items:flex-end;justify-content:center;backdrop-filter:blur(4px);opacity:0;pointer-events:none;transition:opacity 0.25s}
+.modal-bg{position:fixed;inset:0;background:rgba(0,0,0,0.3);z-index:200;display:flex;align-items:flex-end;justify-content:center;opacity:0;pointer-events:none;transition:opacity 0.22s;backdrop-filter:blur(2px)}
 .modal-bg.open{opacity:1;pointer-events:all}
-.modal{background:var(--bg2);border:1px solid var(--border2);border-radius:20px 20px 0 0;padding:28px 24px calc(28px + env(safe-area-inset-bottom));width:100%;max-width:520px;transform:translateY(30px);transition:transform 0.3s cubic-bezier(0.34,1.56,0.64,1)}
+.modal{background:var(--white);border-radius:20px 20px 0 0;padding:24px 20px calc(24px + env(safe-area-inset-bottom));width:100%;max-width:500px;transform:translateY(24px);transition:transform 0.28s cubic-bezier(0.34,1.4,0.64,1);box-shadow:0 -4px 32px rgba(0,0,0,0.12)}
 .modal-bg.open .modal{transform:translateY(0)}
-.modal-handle{width:36px;height:4px;background:var(--border2);border-radius:2px;margin:0 auto 20px}
-.modal-title{font-family:'Syne',sans-serif;font-size:18px;font-weight:700;margin-bottom:20px;color:var(--text)}
-.field{margin-bottom:14px}
-.field label{display:block;font-size:12px;color:var(--text3);text-transform:uppercase;letter-spacing:0.8px;margin-bottom:6px;font-weight:500}
-.field input,.field select{width:100%;padding:11px 14px;background:var(--bg3);border:1px solid var(--border);border-radius:10px;font-family:'DM Sans',sans-serif;font-size:14px;color:var(--text);outline:none;transition:border-color 0.2s;-webkit-appearance:none}
-.field select{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%23556080' stroke-width='2'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 14px center}
-.field input:focus,.field select:focus{border-color:var(--accent)}
-.file-drop{border:1.5px dashed var(--border2);border-radius:10px;padding:24px;text-align:center;cursor:pointer;transition:border-color 0.2s;position:relative}
-.file-drop:hover,.file-drop.drag{border-color:var(--accent)}
-.file-drop input{position:absolute;inset:0;opacity:0;cursor:pointer;width:100%;height:100%}
-.file-drop-icon{font-size:28px;margin-bottom:8px;opacity:0.5}
-.file-drop-text{font-size:13px;color:var(--text2)}
-.file-drop-sub{font-size:12px;color:var(--text3);margin-top:3px}
-.file-selected{font-size:13px;color:var(--accent);margin-top:6px;font-weight:500}
-.modal-actions{display:flex;gap:10px;margin-top:20px}
-.btn-cancel{flex:1;padding:12px;background:transparent;border:1px solid var(--border);border-radius:10px;font-family:'DM Sans',sans-serif;font-size:14px;color:var(--text2);cursor:pointer;transition:all 0.18s}
-.btn-cancel:hover{border-color:var(--border2);color:var(--text)}
-.btn-save{flex:2;padding:12px;background:var(--accent);border:none;border-radius:10px;font-family:'DM Sans',sans-serif;font-size:14px;font-weight:600;color:#0a1628;cursor:pointer;transition:opacity 0.18s}
-.btn-save:hover{opacity:0.88}
-.btn-save:disabled{opacity:0.4;cursor:not-allowed}
+.drag-handle{width:32px;height:4px;background:var(--border2);border-radius:2px;margin:0 auto 18px}
+.modal-title{font-family:'Fraunces',serif;font-size:18px;font-weight:700;color:var(--text);margin-bottom:18px}
+.field{margin-bottom:13px}
+.field label{display:block;font-size:11px;font-weight:600;color:var(--text2);text-transform:uppercase;letter-spacing:0.7px;margin-bottom:5px}
+.field input,.field select{width:100%;padding:10px 12px;background:var(--bg);border:1px solid var(--border);border-radius:var(--r);font-family:'Inter',sans-serif;font-size:14px;color:var(--text);outline:none;transition:border-color 0.18s;-webkit-appearance:none;appearance:none}
+.field select{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%23a09e99' stroke-width='2'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 12px center}
+.field input:focus,.field select:focus{border-color:var(--accent);background:var(--white)}
+
+/* Emoji & color pickers */
+.picker-row{display:flex;gap:7px;flex-wrap:wrap;margin-top:4px}
+.emoji-opt{width:36px;height:36px;border-radius:8px;border:1.5px solid var(--border);background:var(--bg);font-size:17px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all 0.15s}
+.emoji-opt:hover{border-color:var(--border2)}
+.emoji-opt.sel{border-color:var(--accent);background:var(--accent-light)}
+.color-dot{width:26px;height:26px;border-radius:50%;cursor:pointer;border:2px solid transparent;outline:2px solid transparent;transition:all 0.15s}
+.color-dot.sel{outline-color:var(--text);outline-offset:2px}
+
+/* File upload */
+.file-zone{border:1.5px dashed var(--border2);border-radius:var(--r);padding:18px;text-align:center;cursor:pointer;position:relative;transition:all 0.18s;background:var(--bg)}
+.file-zone:hover{border-color:var(--accent);background:var(--accent-light)}
+.file-zone input{position:absolute;inset:0;opacity:0;cursor:pointer;width:100%;height:100%}
+.file-zone-text{font-size:13px;color:var(--text2);font-weight:500}
+.file-zone-sub{font-size:12px;color:var(--text3);margin-top:2px}
+.file-ok{font-size:13px;color:var(--bio);font-weight:600;margin-top:6px}
+
+.modal-row{display:flex;gap:8px;margin-top:18px}
+.btn-ghost{flex:1;padding:11px;background:transparent;border:1px solid var(--border);border-radius:var(--r);font-family:'Inter',sans-serif;font-size:13px;font-weight:500;color:var(--text2);cursor:pointer;transition:all 0.15s}
+.btn-ghost:hover{border-color:var(--border2);color:var(--text)}
+.btn-primary{flex:2;padding:11px;background:var(--text);border:none;border-radius:var(--r);font-family:'Inter',sans-serif;font-size:13px;font-weight:600;color:#fff;cursor:pointer;transition:opacity 0.15s}
+.btn-primary:hover{opacity:0.85}
+.btn-primary:disabled{opacity:0.35;cursor:not-allowed}
 
 /* Toast */
-.toast{position:fixed;bottom:30px;left:50%;transform:translateX(-50%) translateY(20px);background:var(--bg3);border:1px solid var(--border2);border-radius:100px;padding:10px 20px;font-size:13px;color:var(--text);z-index:300;opacity:0;transition:all 0.3s;pointer-events:none;white-space:nowrap}
+.toast{position:fixed;bottom:28px;left:50%;transform:translateX(-50%) translateY(16px);background:var(--text);color:#fff;border-radius:100px;padding:9px 18px;font-size:13px;font-weight:500;z-index:400;opacity:0;pointer-events:none;transition:all 0.25s;white-space:nowrap;box-shadow:var(--shadow2)}
 .toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
 
-@media(min-width:600px){
-  .modal{border-radius:20px;margin:auto;max-height:90vh;overflow-y:auto}
+@media(min-width:580px){
+  .modal{border-radius:16px;margin:auto;max-height:92vh;overflow-y:auto}
   .modal-bg{align-items:center}
 }
-@media(max-width:400px){
-  .stats-bar{grid-template-columns:repeat(3,1fr)}
-  .stat-num{font-size:20px}
+@media(max-width:380px){
+  .stats{grid-template-columns:repeat(3,1fr)}
+  .stat-n{font-size:22px}
 }
 </style>
 </head>
 <body>
-<div class="app">
-  <div class="header">
-    <div class="logo">
-      <div class="logo-mark">
-        <svg viewBox="0 0 24 24" fill="none" stroke="#0a1628" stroke-width="2.5" stroke-linecap="round">
-          <path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/>
+
+<!-- HOME -->
+<div class="screen" id="homeScreen">
+<div class="page">
+  <div class="topnav">
+    <div class="brand">
+      <div class="brand-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M4 19.5A2.5 2.5 0 016.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z"/>
         </svg>
       </div>
       <div>
-        <div class="logo-text">NMAT Hub</div>
-        <div class="logo-sub">Reviewer Library</div>
+        <div class="brand-name">NMAT Hub</div>
+        <div class="brand-tag">Reviewer Library</div>
       </div>
     </div>
-    <button class="header-btn" onclick="openModal()">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>
+    <button class="nav-btn" onclick="openImportModal()">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>
       Import
     </button>
   </div>
 
-  <div class="stats-bar">
-    <div class="stat"><div class="stat-num" id="totalCount">0</div><div class="stat-label">Total</div></div>
-    <div class="stat"><div class="stat-num" id="subjectCount">0</div><div class="stat-label">Subjects</div></div>
-    <div class="stat"><div class="stat-num" id="recentCount">0</div><div class="stat-label">This Week</div></div>
+  <div class="stats">
+    <div class="stat-card"><div class="stat-n" id="totalCount">0</div><div class="stat-l">Reviewers</div></div>
+    <div class="stat-card"><div class="stat-n" id="folderCount">0</div><div class="stat-l">Folders</div></div>
+    <div class="stat-card"><div class="stat-n" id="recentCount">0</div><div class="stat-l">This Week</div></div>
   </div>
 
-  <div class="search-wrap">
-    <div class="search-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg></div>
-    <input class="search-input" type="text" id="searchInput" placeholder="Search reviewers..." oninput="render()">
+  <div class="sec-header">
+    <span class="sec-title">Folders</span>
   </div>
-
-  <div class="chips" id="chips"></div>
-  <div class="section-label" id="sectionLabel"></div>
-  <div class="grid" id="grid"></div>
+  <div class="folder-grid" id="folderGrid"></div>
+</div>
 </div>
 
-<!-- Modal -->
-<div class="modal-bg" id="modalBg" onclick="handleModalBgClick(event)">
+<!-- FOLDER DETAIL -->
+<div class="screen hidden" id="folderScreen">
+<div class="page">
+  <div class="backnav">
+    <button class="back-btn" onclick="goHome()">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M19 12H5M12 5l-7 7 7 7"/></svg>
+      All Folders
+    </button>
+    <button class="nav-btn" onclick="openImportModal()">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>
+      Import here
+    </button>
+  </div>
+  <div class="folder-headline">
+    <div class="folder-hl-icon" id="detailIcon"></div>
+    <div class="folder-hl-name" id="detailTitle"></div>
+  </div>
+  <div class="folder-hl-count" id="detailCount"></div>
+  <div class="rev-grid" id="cardGrid"></div>
+</div>
+</div>
+
+<!-- FOLDER MODAL -->
+<div class="modal-bg" id="folderModalBg" onclick="fmBgClick(event)">
   <div class="modal">
-    <div class="modal-handle"></div>
+    <div class="drag-handle"></div>
+    <div class="modal-title" id="fModalTitle">New Folder</div>
+    <div class="field"><label>Name</label><input type="text" id="fName" placeholder="e.g. Bio Finals Sprint, Weak Topics"></div>
+    <div class="field"><label>Icon</label><div class="picker-row" id="emojiPicker"></div></div>
+    <div class="field"><label>Color</label><div class="picker-row" id="colorPicker"></div></div>
+    <div class="modal-row">
+      <button class="btn-ghost" onclick="closeFM()">Cancel</button>
+      <button class="btn-primary" onclick="saveFolder()">Save Folder</button>
+    </div>
+  </div>
+</div>
+
+<!-- IMPORT MODAL -->
+<div class="modal-bg" id="importModalBg" onclick="imBgClick(event)">
+  <div class="modal">
+    <div class="drag-handle"></div>
     <div class="modal-title">Import Reviewer</div>
     <div class="field"><label>Name</label><input type="text" id="mName" placeholder="e.g. Biology Part 3 — Genetics"></div>
     <div class="field">
@@ -214,19 +274,19 @@ body::before{
       </select>
     </div>
     <div class="field"><label>Part / Topic (optional)</label><input type="text" id="mPart" placeholder="e.g. Part 3, Optics, Genetics"></div>
+    <div class="field"><label>Save to Folder</label><select id="mFolder"></select></div>
     <div class="field">
       <label>HTML File</label>
-      <div class="file-drop" id="fileDrop">
+      <div class="file-zone">
         <input type="file" accept=".html" id="mFile" onchange="onFileChange()">
-        <div class="file-drop-icon">📄</div>
-        <div class="file-drop-text">Tap to select your HTML file</div>
-        <div class="file-drop-sub">Only .html files supported</div>
+        <div class="file-zone-text">Tap to select your HTML file</div>
+        <div class="file-zone-sub">.html files only</div>
       </div>
-      <div class="file-selected" id="fileSelected"></div>
+      <div class="file-ok" id="fileOk"></div>
     </div>
-    <div class="modal-actions">
-      <button class="btn-cancel" onclick="closeModal()">Cancel</button>
-      <button class="btn-save" id="saveBtn" onclick="saveReviewer()" disabled>Save Reviewer</button>
+    <div class="modal-row">
+      <button class="btn-ghost" onclick="closeIM()">Cancel</button>
+      <button class="btn-primary" id="saveBtn" onclick="saveReviewer()" disabled>Save Reviewer</button>
     </div>
   </div>
 </div>
@@ -234,158 +294,137 @@ body::before{
 <div class="toast" id="toast"></div>
 
 <script>
-const SUBJECTS = ['All','Biology','Chemistry','Physics','Social Science','Verbal','Quantitative'];
-let reviewers = [];
-let activeFilter = 'All';
-let pendingFile = null;
+const EMOJIS=['📚','🧬','⚗️','⚡','🧠','🌍','📝','🔬','💊','🏆','🎯','💡','📖','🗂️','🧪','🔭'];
+const COLORS=['#2563eb','#16a34a','#d97706','#7c3aed','#e11d48','#0d9488','#ea580c','#0891b2'];
+let db,folders=[],reviewers=[],currentFolderId=null,editFId=null,selEmoji=EMOJIS[0],selColor=COLORS[0],pendingFile=null;
 
-// Load from IndexedDB for large file support
-const DB_NAME = 'nmat_hub', DB_VER = 1, STORE = 'reviewers';
-let db;
-
-function openDB(){
-  return new Promise((res,rej)=>{
-    const req = indexedDB.open(DB_NAME, DB_VER);
-    req.onupgradeneeded = e => e.target.result.createObjectStore(STORE,{keyPath:'id'});
-    req.onsuccess = e => { db = e.target.result; res(db); };
-    req.onerror = () => rej();
-  });
-}
-function dbGetAll(){
-  return new Promise(res=>{
-    const tx = db.transaction(STORE,'readonly');
-    const req = tx.objectStore(STORE).getAll();
-    req.onsuccess = () => res(req.result||[]);
-  });
-}
-function dbPut(item){
-  return new Promise(res=>{
-    const tx = db.transaction(STORE,'readwrite');
-    tx.objectStore(STORE).put(item);
-    tx.oncomplete = res;
-  });
-}
-function dbDelete(id){
-  return new Promise(res=>{
-    const tx = db.transaction(STORE,'readwrite');
-    tx.objectStore(STORE).delete(id);
-    tx.oncomplete = res;
-  });
-}
+function openDB(){return new Promise((res,rej)=>{const r=indexedDB.open('nmat_hub_v2',1);r.onupgradeneeded=e=>{const d=e.target.result;if(!d.objectStoreNames.contains('folders'))d.createObjectStore('folders',{keyPath:'id'});if(!d.objectStoreNames.contains('reviewers'))d.createObjectStore('reviewers',{keyPath:'id'});};r.onsuccess=e=>{db=e.target.result;res()};r.onerror=rej;})}
+function dbAll(s){return new Promise(r=>{const q=db.transaction(s,'readonly').objectStore(s).getAll();q.onsuccess=()=>r(q.result||[]);})}
+function dbPut(s,v){return new Promise(r=>{const tx=db.transaction(s,'readwrite');tx.objectStore(s).put(v);tx.oncomplete=r;})}
+function dbDel(s,id){return new Promise(r=>{const tx=db.transaction(s,'readwrite');tx.objectStore(s).delete(id);tx.oncomplete=r;})}
 
 async function init(){
   await openDB();
-  reviewers = await dbGetAll();
-  reviewers.sort((a,b)=>b.id-a.id);
-  renderChips();
-  render();
-  if('serviceWorker' in navigator) navigator.serviceWorker.register('sw.js');
+  folders=await dbAll('folders');reviewers=await dbAll('reviewers');
+  folders.sort((a,b)=>a.id-b.id);reviewers.sort((a,b)=>b.id-a.id);
+  renderHome();
+  if('serviceWorker'in navigator)navigator.serviceWorker.register('sw.js');
 }
 
-function renderChips(){
-  const used = new Set(reviewers.map(r=>r.subject));
-  document.getElementById('chips').innerHTML = SUBJECTS.filter(s=>s==='All'||used.has(s)).map(s=>
-    `<button class="chip${activeFilter===s?' active':''}" data-s="${s}" onclick="setFilter('${s}')">${s}</button>`
-  ).join('');
-}
+function renderHome(){
+  const now=Date.now(),week=604800000;
+  document.getElementById('totalCount').textContent=reviewers.length;
+  document.getElementById('folderCount').textContent=folders.length;
+  document.getElementById('recentCount').textContent=reviewers.filter(r=>now-r.id<week).length;
 
-function setFilter(s){ activeFilter=s; renderChips(); render(); }
-
-function render(){
-  const q = document.getElementById('searchInput').value.toLowerCase().trim();
-  let filtered = reviewers.filter(r=>{
-    const mF = activeFilter==='All'||r.subject===activeFilter;
-    const mQ = !q||r.name.toLowerCase().includes(q)||(r.part||'').toLowerCase().includes(q)||r.subject.toLowerCase().includes(q);
-    return mF&&mQ;
-  });
-
-  // Stats
-  const now = Date.now();
-  const week = 7*24*60*60*1000;
-  document.getElementById('totalCount').textContent = reviewers.length;
-  document.getElementById('subjectCount').textContent = new Set(reviewers.map(r=>r.subject)).size;
-  document.getElementById('recentCount').textContent = reviewers.filter(r=>now-r.id<week).length;
-  document.getElementById('sectionLabel').textContent = filtered.length ? `${filtered.length} reviewer${filtered.length===1?'':'s'}` : '';
-
-  if(!filtered.length){
-    document.getElementById('grid').innerHTML = `<div class="empty">
-      <div class="empty-icon">📚</div>
-      <div class="empty-text">${reviewers.length===0?'No reviewers yet':'No results found'}</div>
-      <div class="empty-sub">${reviewers.length===0?'Tap Import to add your first HTML reviewer':'Try a different search or filter'}</div>
-    </div>`;
-    return;
-  }
-
-  document.getElementById('grid').innerHTML = filtered.map(r=>`
-    <div class="card" data-s="${r.subject}">
-      <div class="card-accent"></div>
-      <div class="card-body">
-        <div class="card-badge">${r.subject}</div>
-        <div class="card-name">${r.name}</div>
-        <div class="card-part">${r.part||''}</div>
-        <div class="card-footer">
-          <button class="open-btn" onclick="launch(${r.id})">Open reviewer</button>
-          <button class="del-btn" onclick="deleteR(${r.id})">✕</button>
+  document.getElementById('folderGrid').innerHTML=folders.map(f=>{
+    const n=reviewers.filter(r=>r.folderId===f.id).length;
+    return`<div class="folder-card" onclick="openFolder(${f.id})">
+      <div class="folder-bar" style="background:${f.color}"></div>
+      <div class="folder-top">
+        <div class="folder-emoji">${f.emoji}</div>
+        <div class="folder-menu">
+          <button class="menu-btn" onclick="event.stopPropagation();editFolder(${f.id})" title="Edit">✏️</button>
+          <button class="menu-btn danger" onclick="event.stopPropagation();deleteFolder(${f.id})" title="Delete">✕</button>
         </div>
-        <div class="card-date">Added ${new Date(r.id).toLocaleDateString('en-PH',{month:'short',day:'numeric',year:'numeric'})}</div>
       </div>
-    </div>`).join('');
+      <div class="folder-name">${f.name}</div>
+      <div class="folder-meta">${n} reviewer${n===1?'':'s'}</div>
+    </div>`;
+  }).join('')+`<div class="folder-card folder-new" onclick="openFM()">
+    <div class="new-plus">+</div>
+    <div class="new-label">New folder</div>
+  </div>`;
 }
 
-function launch(id){
-  const r = reviewers.find(x=>x.id===id);
-  if(!r) return;
-  const blob = new Blob([r.html],{type:'text/html'});
-  const url = URL.createObjectURL(blob);
-  window.open(url,'_blank');
+function openFolder(id){
+  currentFolderId=id;
+  const f=folders.find(x=>x.id===id);
+  const list=reviewers.filter(r=>r.folderId===id);
+  document.getElementById('detailIcon').textContent=f.emoji;
+  document.getElementById('detailTitle').textContent=f.name;
+  document.getElementById('detailCount').textContent=`${list.length} reviewer${list.length===1?'':'s'}`;
+  document.getElementById('cardGrid').innerHTML=list.length?list.map(r=>`
+    <div class="rev-card" data-s="${r.subject}">
+      <div class="rev-top"></div>
+      <div class="rev-body">
+        <div class="rev-badge">${r.subject}</div>
+        <div class="rev-name">${r.name}</div>
+        <div class="rev-part">${r.part||''}</div>
+        <div class="rev-actions">
+          <button class="open-btn" onclick="launch(${r.id})">Open reviewer</button>
+          <button class="rm-btn" onclick="delReviewer(${r.id})">✕</button>
+        </div>
+        <div class="rev-date">Added ${new Date(r.id).toLocaleDateString('en-PH',{month:'short',day:'numeric',year:'numeric'})}</div>
+      </div>
+    </div>`).join(''):`<div class="empty"><div class="empty-icon">📂</div><div class="empty-text">This folder is empty</div><div class="empty-sub">Tap "Import here" to add reviewers</div></div>`;
+  document.getElementById('homeScreen').classList.add('hidden');
+  document.getElementById('folderScreen').classList.remove('hidden');
+  window.scrollTo(0,0);
 }
 
-async function deleteR(id){
-  if(!confirm('Remove this reviewer from the hub?')) return;
-  await dbDelete(id);
-  reviewers = reviewers.filter(x=>x.id!==id);
-  renderChips(); render();
-  toast('Reviewer removed');
+function goHome(){document.getElementById('folderScreen').classList.add('hidden');document.getElementById('homeScreen').classList.remove('hidden');currentFolderId=null;window.scrollTo(0,0);}
+
+function launch(id){const r=reviewers.find(x=>x.id===id);if(!r)return;window.open(URL.createObjectURL(new Blob([r.html],{type:'text/html'})),'_blank');}
+
+async function delReviewer(id){if(!confirm('Remove this reviewer?'))return;await dbDel('reviewers',id);reviewers=reviewers.filter(x=>x.id!==id);if(currentFolderId)openFolder(currentFolderId);renderHome();toast('Reviewer removed');}
+
+async function deleteFolder(id){const n=reviewers.filter(r=>r.folderId===id).length;if(!confirm(`Delete this folder${n?` and its ${n} reviewer${n===1?'':'s'}`:''}?`))return;await dbDel('folders',id);for(const r of reviewers.filter(x=>x.folderId===id))await dbDel('reviewers',r.id);folders=folders.filter(x=>x.id!==id);reviewers=reviewers.filter(x=>x.folderId!==id);renderHome();toast('Folder deleted');}
+
+// Folder modal
+function openFM(eid=null){
+  editFId=eid;
+  const f=eid?folders.find(x=>x.id===eid):null;
+  selEmoji=f?f.emoji:EMOJIS[0];selColor=f?f.color:COLORS[0];
+  document.getElementById('fModalTitle').textContent=eid?'Edit Folder':'New Folder';
+  document.getElementById('fName').value=f?f.name:'';
+  buildEmojiPicker();buildColorPicker();
+  document.getElementById('folderModalBg').classList.add('open');
+}
+function editFolder(id){openFM(id);}
+function closeFM(){document.getElementById('folderModalBg').classList.remove('open');}
+function fmBgClick(e){if(e.target===document.getElementById('folderModalBg'))closeFM();}
+
+function buildEmojiPicker(){document.getElementById('emojiPicker').innerHTML=EMOJIS.map(e=>`<button class="emoji-opt${e===selEmoji?' sel':''}" onclick="pickEmoji('${e}')">${e}</button>`).join('');}
+function buildColorPicker(){document.getElementById('colorPicker').innerHTML=COLORS.map(c=>`<div class="color-dot${c===selColor?' sel':''}" style="background:${c}" onclick="pickColor('${c}')"></div>`).join('');}
+function pickEmoji(e){selEmoji=e;buildEmojiPicker();}
+function pickColor(c){selColor=c;buildColorPicker();}
+
+async function saveFolder(){
+  const name=document.getElementById('fName').value.trim();
+  if(!name){alert('Please enter a folder name.');return;}
+  if(editFId){const f=folders.find(x=>x.id===editFId);f.name=name;f.emoji=selEmoji;f.color=selColor;await dbPut('folders',f);}
+  else{const f={id:Date.now(),name,emoji:selEmoji,color:selColor};await dbPut('folders',f);folders.push(f);}
+  closeFM();renderHome();toast(editFId?'Folder updated':'Folder created!');editFId=null;
 }
 
-function openModal(){ document.getElementById('modalBg').classList.add('open'); }
-function closeModal(){ document.getElementById('modalBg').classList.remove('open'); pendingFile=null; document.getElementById('fileSelected').textContent=''; document.getElementById('mFile').value=''; document.getElementById('saveBtn').disabled=true; }
-function handleModalBgClick(e){ if(e.target===document.getElementById('modalBg')) closeModal(); }
-
-function onFileChange(){
-  const file = document.getElementById('mFile').files[0];
-  if(!file) return;
-  pendingFile = file;
-  document.getElementById('fileSelected').textContent = '✓ ' + file.name;
-  document.getElementById('saveBtn').disabled = false;
-  if(!document.getElementById('mName').value){
-    document.getElementById('mName').value = file.name.replace(/\.html?$/i,'').replace(/[-_]/g,' ');
-  }
+// Import modal
+function openImportModal(){
+  const sel=document.getElementById('mFolder');
+  sel.innerHTML=folders.length?folders.map(f=>`<option value="${f.id}"${f.id===currentFolderId?' selected':''}>${f.emoji} ${f.name}</option>`):'<option value="">— Create a folder first —</option>';
+  document.getElementById('importModalBg').classList.add('open');
 }
+function closeIM(){document.getElementById('importModalBg').classList.remove('open');pendingFile=null;document.getElementById('fileOk').textContent='';document.getElementById('mFile').value='';document.getElementById('saveBtn').disabled=true;}
+function imBgClick(e){if(e.target===document.getElementById('importModalBg'))closeIM();}
+
+function onFileChange(){const f=document.getElementById('mFile').files[0];if(!f)return;pendingFile=f;document.getElementById('fileOk').textContent='✓ '+f.name;document.getElementById('saveBtn').disabled=false;if(!document.getElementById('mName').value)document.getElementById('mName').value=f.name.replace(/\.html?$/i,'').replace(/[-_]/g,' ');}
 
 async function saveReviewer(){
-  const name = document.getElementById('mName').value.trim();
-  const subject = document.getElementById('mSubject').value;
-  const part = document.getElementById('mPart').value.trim();
-  if(!name){ alert('Please enter a name.'); return; }
-  if(!pendingFile){ alert('Please select a file.'); return; }
-  const html = await pendingFile.text();
-  const r = { id: Date.now(), name, subject, part, html };
-  await dbPut(r);
-  reviewers.unshift(r);
-  closeModal();
-  document.getElementById('mName').value='';
-  document.getElementById('mPart').value='';
-  renderChips(); render();
-  toast('Reviewer imported!');
+  const name=document.getElementById('mName').value.trim();
+  const subject=document.getElementById('mSubject').value;
+  const part=document.getElementById('mPart').value.trim();
+  const folderId=parseInt(document.getElementById('mFolder').value)||null;
+  if(!name){alert('Please enter a name.');return;}
+  if(!pendingFile){alert('Please select a file.');return;}
+  if(!folderId){alert('Please create a folder first.');return;}
+  const html=await pendingFile.text();
+  const r={id:Date.now(),name,subject,part,folderId,html};
+  await dbPut('reviewers',r);reviewers.unshift(r);
+  closeIM();document.getElementById('mName').value='';document.getElementById('mPart').value='';
+  renderHome();if(currentFolderId===folderId)openFolder(folderId);toast('Reviewer imported!');
 }
 
-function toast(msg){
-  const t = document.getElementById('toast');
-  t.textContent = msg;
-  t.classList.add('show');
-  setTimeout(()=>t.classList.remove('show'), 2500);
-}
+function toast(msg){const t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),2500);}
 
 init();
 </script>
